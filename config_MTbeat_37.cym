@@ -1,0 +1,119 @@
+% ==================================================================
+% 2021, Neha Khetan
+% Representative c onfig file for the simulations for MT-beating 
+% For Shivani Yadav, Athale Lab
+% Aim: 3D Gliding assay: 
+%         a) Capture the loop and bending of MTs as observed in experiments with dynein ( yeast: minimal ) for differr mT properties
+%         b)   `` ..............with rigor kinesin
+%         c)                    with inactive dyneins
+%         d)                    immobilized tip
+%         e) motor models 
+%         f) combine with 3D          
+% 28-04-2021: Neha ,  i)  3D geometry with semi-periodic 
+%             	     ii) 3D system and dynein localized at the base
+%                   iii) MT rigidty
+%                   iv) Mechanochemical properties dictate MT-patterns in collectives
+% 17 -05 -2021 Neha,
+%           Titration of dynein and kinesin-rigor gliding assay in presence of steric interactions
+% ==================================================================
+
+
+
+
+set simul system
+{
+    time_step  = 0.01
+    viscosity  = 0.000826   %0.0013
+    kT         = 0.0043     % 0.0042
+    display    = ( style=2; window_size = ( 400 , 400 );  back_color = white )
+}
+
+% _________________________________________________________________ 
+%                 3D system -  semi periodic  + dynein at the base , NK
+set space cell
+{
+    shape = periodic
+}
+
+new cell
+{
+    length   = 30,  20  
+}
+
+
+set hand strong_hand
+{
+    unbinding_rate      = 0
+    unbinding_force     = Inf  % 300 - 900 pN for biotin strepta
+    display             = ( size = 10 ; color = red)
+}
+
+set single pivot
+{
+    hand        	      = strong_hand
+    stiffness   	      = 1000
+    activity    	      = fixed
+}
+
+
+
+
+set fiber microtubule
+{
+    rigidity 	         = 20   		%  Taxol maybe ~10-20 ; MT : 20 - 22 pN.um^2 (Gittes et. al 1993); value of 1 is more of Actin like 
+    segmentation         = 0.1
+    confine 	         = 1 , 100 , cell %nk: mt confined in the space
+    %steric              = 1 , 0.05 ,  0
+    display              = ( color = black ; plus_end = 3)
+}
+
+
+new 1 microtubule
+{
+    position = -1 0  
+    orientation = 1 0 0
+    length =  10
+    attach1 = pivot, 0, plus_end
+    attach2 = pivot, 2 , plus_end
+}
+
+
+
+
+set hand dynein
+{
+    binding_rate    	        = 5
+    binding_range    	        = 0.02
+    unbinding_rate   	        = 0.04
+    unbinding_force  	        = 3
+    
+    activity        	        = move
+    unloaded_speed              = -0.1
+    stall_force     	        = 5
+    display         	        = ( color=blue; size=0.5; )
+    
+}
+
+set single grafted
+{
+    hand        = dynein
+    stiffness   = 100
+    activity    = fixed
+    
+}
+
+
+
+new 6000 grafted
+
+
+
+
+
+
+run system
+{
+    nb_steps = 120000
+    nb_frames = 1200
+}
+
