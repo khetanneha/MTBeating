@@ -1,0 +1,135 @@
+% ========================================================================================
+% April 2021 - May 2022, 
+% Neha Khetan, Athale Lab , IISER- Pune
+% Cilia/Flagella/Wave beating of single MT  
+%     Here, the effect of nanobody-dynein on a single MT pinned at plus end in a 3D environment is simulated.
+%     The effects of spread in 'z' of the dynein-nanobody and the height of MT is also systematically explored
+%     Implemented by "varying the effective spring constant of the motor-nanobody complex modelled as just the motor"
+%     Further, does kinesin in 2D show similar motor-springy dependent effect and whether in 3D, dynein-like 3D MT beats emerge?
+%     Hd: dynein spread, Hm: Mt height
+%
+%
+% Aim: 3D and 2D Gliding assay set up of pinned MTs: 
+%         a) Capture the loop and bending of MTs as observed in experiments with dynein ( yeast: minimal )
+%         b) Effects with rigor kinesin
+%         c) Effects of MT rigidity
+%         d) Effects of dynein-kinesin and mechanochemistry
+% =============================================================================================
+
+
+set simul system
+{
+    time_step = 0.01
+    viscosity = 0.000826
+    kT        = 0.0043
+    display   = ( style=2;   back_color = white  ; window_size= (300 , 200 ))
+}
+
+
+set space cell
+{
+    shape = strip
+}
+
+new cell
+{
+    length   = 30,  20  
+    top      =  5      % Depth typically in 3D is 0.1 um = 100 nm
+    bottom   = -5
+}
+
+
+set space Base
+{
+	shape = strip
+}
+
+
+new space Base
+{
+	length   = 30 , 20 
+	top      = -5      %-4.8 %0.0
+	bottom   = -5      %-0.05
+}
+
+
+
+
+set hand strong_hand
+{
+    unbinding_rate    = 0
+    unbinding_force   = Inf
+    display = ( size  = 10 ; color = red)
+}
+
+
+set single pivot
+{
+    hand        = strong_hand
+    stiffness   = 1000    %Inf % 10
+    activity    = fixed
+}
+
+ 
+
+set fiber microtubule
+{
+    rigidity             = 20        %  Taxol maybe ~10-20 ; MT : 20 - 22 pN.um^2 (Gittes et. al 1993); value of 1 is more of Actin like 
+    segmentation         = 0.1
+    display              = ( color = black )
+    confine              = 1 , 100 , cell
+}
+
+
+new 1 microtubule
+{
+    position = (-1 0 -5 )      
+    orientation = 1 0 0
+    length =  15
+    attach1 = pivot, 0, plus_end
+    attach2 = pivot, 2 , plus_end
+    placement = surface, rectangle
+
+
+}
+
+set hand dynein
+{
+    binding_rate                = 5
+    binding_range               = 0.02
+    unbinding_rate              = 0.04
+    unbinding_force             = 3
+    
+    activity                    = move
+    unloaded_speed              = -0.1
+    stall_force                 = 5
+    display                     = ( color=blue; size=0.5; )
+    
+}
+
+
+set single grafted
+{
+    hand        = dynein
+    stiffness   = 100  % 0.1 , 1 , 10 , 20 , 50 , 70,  100 , 1000
+    activity    = fixed
+}
+
+
+
+
+
+new 600 grafted
+
+{
+   position =  inside , Base
+}
+
+
+
+run system
+{
+    nb_steps = 60000
+    nb_frames = 600
+}
+
