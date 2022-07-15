@@ -9,7 +9,8 @@ Contains the following
 
 
 > Experiment analysis scripts
-3. Scripts used to analyze the data in experiments: README_ExptFlagellaData.txt, run_ExpAnalysis.m and run_ExpAnalysis_V2.m 
+3. Scripts used to analyze the data in experiments: 
+   README_ExptFlagellaData.txt, run_ExpAnalysis.m and run_ExpAnalysis_V2.m 
 
 > Simulation analysis scripts
 4. Sim-analysis-2D folder
