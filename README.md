@@ -1,9 +1,12 @@
 # MTBeatingPatterns
 
 Simulation and analysis scripts for pinned Microtubule filament motility patterns
-@ Yadav SA, Khatri D, Soni A, Khetan N, Athale CA. Wave-like oscillations of clamped microtubules driven by collective dynein transport. Biophys J. 2024
+
+@ _Yadav SA, Khatri D, Soni A, Khetan N, Athale CA. Wave-like oscillations of clamped microtubules driven by collective dynein transport. Biophys J. 2024_
 @[Link]( https://www.cell.com/biophysj/fulltext/S0006-3495(24)00032-8?uuid=uuid%3Ad3c4c15b-f8cc-4078-8fdf-d1ed1293884a )
 -----------------------------------------
+
+
 Contains the following and preprint @ [https://www.biorxiv.org/content/10.1101/2022.09.11.507451v1]
 
 > Cytosim simulation 
